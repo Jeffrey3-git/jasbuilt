@@ -1,0 +1,76 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  username  String    @unique
+  password  String    // Hashed with bcrypt
+  name      String
+  school    String    // e.g., "UG", "KNUST", "Ashesi"
+  bio       String?
+  avatarUrl String?
+  githubUrl String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // Relationships
+  projects  Project[]
+  upvotes   Upvote[]
+  comments  Comment[]
+
+  @@index([username]) // Fast lookups for profile pages (/profile/jas)
+}
+
+model Project {
+  id          String    @id @default(uuid())
+  title       String
+  description String    @db.Text
+  imageUrl    String    // Hosted on Cloudinary
+  githubUrl   String
+  liveUrl     String?
+  tags        String[]  // e.g., ["React", "Node", "AI"]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relationships
+  authorId    String
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  upvotes     Upvote[]
+  comments    Comment[]
+
+  @@index([createdAt(sort: Desc)]) // Fast sorting for the trending/latest home feed
+}
+
+model Upvote {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  // Relationships
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  // Compound Unique Index: Prevents a user from upvoting the same project multiple times
+  @@unique([userId, projectId])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}

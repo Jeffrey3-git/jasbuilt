@@ -1,0 +1,27 @@
+// ==========================================================================
+// JASBuilt Design Tokens
+// ==========================================================================
+
+// Color Palette
+$color-bg-dark: #0a0f1d;       // Deep space nebula background
+$color-surface-dark: #12192c;  // Circuit-board/Card containers
+$color-border-dark: #1e294b;   // Deep indigo lines
+$color-text-main: #f8fafc;     // Clean, crisp white text
+$color-text-muted: #94a3b8;    // Accessible slate gray for descriptions
+
+// Accents (Product Hunt Vibe meets Tech Ghana)
+$color-primary: #ff4f00;       // Product Hunt energetic orange
+$color-primary-hover: #e04500;
+$color-accent-green: #10b981;   // For upvotes and growth states
+$color-accent-gold: #f59e0b;    // Representing GH talent and excellence
+
+// Typography
+$font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+$font-mono: 'Fira Code', monospace;
+
+// Layout & Animation Constraints
+$radius-sm: 6px;
+$radius-md: 12px;
+$radius-lg: 20px;
+$transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+$shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);

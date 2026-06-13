@@ -1,0 +1,36 @@
+{
+  "name": "jasbuilt-monorepo",
+  "private": true,
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter=api dev & pnpm --filter=web dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "prepare": "husky || true"
+  },
+  "lint-staged": {
+    "apps/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "packages/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "**/*.{json,md,scss,css}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "jsonwebtoken": "^9.0.3",
+    "react-router-dom": "^7.17.0"
+  },
+  "devDependencies": {
+    "prisma": "^7.8.0"
+  }
+}
