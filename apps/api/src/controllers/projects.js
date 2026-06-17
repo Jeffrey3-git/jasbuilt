@@ -12,15 +12,15 @@ export const createProject = async (req, res, next) => {
       return res.status(400).json({ message: 'A project screenshot image upload is required.' });
     }
 
-    // Notice we removed imageUrl from req.body, because it's coming from req.file now!
-    const { title, description, githubUrl, liveUrl, tags } = req.body;
+    // ✅ FIXED: Changed 'tags' to 'techStack' to match what frontend FormData appends
+    const { title, description, githubUrl, liveUrl, techStack } = req.body;
 
-    if (!title || !description || !githubUrl || !tags) {
+    if (!title || !description || !githubUrl || !techStack) {
       return res.status(400).json({ message: 'Missing core descriptive text fields.' });
     }
 
-    // Convert stringified tags array from frontend forms back into a real JavaScript array
-    const parsedTags = typeof tags === 'string' ? JSON.parse(tags) : tags;
+    // ✅ FIXED: Parse 'techStack' string array back into clean JavaScript array
+    const parsedTags = typeof techStack === 'string' ? JSON.parse(techStack) : techStack;
 
     // 2. Database Insertion with Live Cloudinary CDN URL
     const newProject = await prisma.project.create({
@@ -30,7 +30,7 @@ export const createProject = async (req, res, next) => {
         imageUrl: req.file.path, // The highly optimized secure CDN link from Cloudinary
         githubUrl,
         liveUrl,
-        tags: parsedTags,
+        tags: parsedTags, // Maps perfectly to Prisma schema's 'tags' property string array
         authorId: req.user.id
       },
       include: {
@@ -84,6 +84,88 @@ export const getAllProjects = async (req, res, next) => {
     });
 
     res.status(200).json(projects);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @route   GET /api/projects/:id
+ * @desc    Fetch a single project detail profile along with its comments
+ * @access  Public
+ */
+export const getProjectById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const project = await prisma.project.findUnique({
+      where: { id },
+      include: {
+        // Fetch the profile of the student who built it
+        author: { 
+          select: { username: true, name: true, school: true, avatarUrl: true } 
+        },
+        // Pull down all related feedback comments chronologically
+        comments: {
+          include: { 
+            user: { select: { username: true, name: true } } 
+          },
+          orderBy: { createdAt: 'desc' }
+        },
+        // Aggregate statistics for the UI pills
+        _count: { 
+          select: { upvotes: true, comments: true } 
+        }
+      }
+    });
+
+    if (!project) {
+      return res.status(404).json({ message: 'Project build profile not found.' });
+    }
+
+    res.status(200).json(project);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @route   POST /api/projects/:id/upvote
+ * @desc    Atomic upvote tracker using your compound unique index architecture
+ * @access  Private (Requires protect middleware)
+ */
+export const toggleUpvote = async (req, res, next) => {
+  try {
+    const { id: projectId } = req.params;
+    const userId = req.user.id;
+
+    // Verify project exists
+    const project = await prisma.project.findUnique({ where: { id: projectId } });
+    if (!project) return res.status(404).json({ message: 'Project not found.' });
+
+    // Check for existing upvote relation
+    const existingUpvote = await prisma.upvote.findUnique({
+      where: {
+        userId_projectId: { userId, projectId }
+      }
+    });
+
+    if (existingUpvote) {
+      // Undo action if clicked again
+      await prisma.upvote.delete({
+        where: {
+          userId_projectId: { userId, projectId }
+        }
+      });
+      return res.status(200).json({ upvoted: false });
+    }
+
+    // Insert new interaction
+    await prisma.upvote.create({
+      data: { userId, projectId }
+    });
+
+    res.status(201).json({ upvoted: true });
   } catch (error) {
     next(error);
   }

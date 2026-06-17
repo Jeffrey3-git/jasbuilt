@@ -6,7 +6,7 @@
     "pnpm": ">=8.0.0"
   },
   "scripts": {
-    "dev": "pnpm --filter=api dev & pnpm --filter=web dev",
+    "dev": "pnpm --parallel --filter @jasbuilt/api --filter @jasbuilt/web dev",
     "build": "pnpm -r build",
     "lint": "pnpm -r lint",
     "prepare": "husky || true"

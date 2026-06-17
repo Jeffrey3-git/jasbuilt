@@ -49,7 +49,9 @@ export const Submit = () => {
     submissionPayload.append('githubUrl', formData.githubUrl);
     submissionPayload.append('liveUrl', formData.liveUrl);
     submissionPayload.append('image', imageFile); // Drops our binary stream file right in
-    submissionPayload.append('tags', JSON.stringify(selectedTags)); // Stringify arrays for multiform parse streams
+    
+    // ✅ CHANGED: Changed 'tags' to 'techStack' to match your backend parser keys
+    submissionPayload.append('techStack', JSON.stringify(selectedTags)); 
 
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/projects`, {
@@ -65,6 +67,7 @@ export const Submit = () => {
 
       if (!response.ok) throw new Error(data.message || 'Failed to submit project.');
 
+      alert('Build shipped successfully! 🚀');
       navigate('/'); // Return successfully back home to the product feed
     } catch (err) {
       setError(err.message);

@@ -55,28 +55,33 @@
       @media (max-width: 600px) { grid-template-columns: 1fr; }
     }
 
+    // Integrated and merged your tags-grid configuration
     .tags-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 10px;
+      margin-top: 10px;
       background: $color-bg-dark;
       padding: 1rem;
       border-radius: $radius-sm;
       border: 1px solid $color-border-dark;
 
       .tag-chip {
-        padding: 0.4rem 0.8rem;
-        background: $color-surface-dark;
-        border: 1px solid $color-border-dark;
+        padding: 6px 12px;
+        background: #0f172a;
+        border: 1px solid #1e293b;
         color: $color-text-muted;
-        border-radius: 50px;
-        font-size: 0.85rem;
-        transition: $transition-smooth;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover { border-color: #3b82f6; }
 
         &.active {
-          background: rgba($color-primary, 0.15);
-          border-color: $color-primary;
-          color: $color-primary;
+          background: #3b82f6;
+          border-color: #3b82f6;
+          color: white;
         }
       }
     }

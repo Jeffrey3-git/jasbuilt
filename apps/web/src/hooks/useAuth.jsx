@@ -3,18 +3,18 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('jasbuilt_token'));
+  // ✅ ENHANCEMENT: Use lazy initializers so localStorage reads only fire ONCE on mount, not on every render
+  const [token, setToken] = useState(() => localStorage.getItem('jasbuilt_token'));
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('jasbuilt_user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // If token exists on load, restore context state
-    const savedUser = localStorage.getItem('jasbuilt_user');
-    if (token && savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
+    // Context state restoration now safely completes before lifting the screen curtain
     setLoading(false);
-  }, [token]);
+  }, []);
 
   const loginSession = (userData, userToken) => {
     localStorage.setItem('jasbuilt_token', userToken);
@@ -32,6 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, token, loading, loginSession, logoutSession, isAuthenticated: !!user }}>
+      {/* Guard prevents children from rendering briefly with partial/unloaded state values */}
       {!loading && children}
     </AuthContext.Provider>
   );
