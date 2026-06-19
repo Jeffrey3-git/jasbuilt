@@ -6,6 +6,8 @@ import { GH_SCHOOLS } from '../../../../packages/shared/src/index'; // Import sh
 export const Auth = ({ isRegisterMode = false }) => {
   const navigate = useNavigate();
   const { loginSession } = useAuth();
+  
+  // 🚨 FIXED: Controlled local state instance instead of relying on immutable static prop references
   const [isRegister, setIsRegister] = useState(isRegisterMode);
   
   // Single consolidated state object for form fields
@@ -14,7 +16,7 @@ export const Auth = ({ isRegisterMode = false }) => {
     username: '',
     password: '',
     name: '',
-    school: GH_SCHOOLS[0].id // Default to the first school (UG)
+    school: GH_SCHOOLS && GH_SCHOOLS.length > 0 ? GH_SCHOOLS[0].id : '' // Safe asset default fallback
   });
   
   const [error, setError] = useState('');
@@ -30,7 +32,9 @@ export const Auth = ({ isRegisterMode = false }) => {
     setSubmitting(true);
     setError('');
 
+    // 🚨 FIXED: Tracks dynamic state variable isRegister instead of fixed component layout props
     const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
+    
     // Payload adaptation based on route criteria
     const payload = isRegister 
       ? formData 
@@ -77,12 +81,27 @@ export const Auth = ({ isRegisterMode = false }) => {
                 <input type="text" id="name" name="name" required value={formData.name} onChange={handleInputChange} placeholder="Kofi Mensah" />
               </div>
 
+              {/* ✅ ENHANCED dropdown with explicit class and semantic layout values */}
               <div className="form-group">
                 <label htmlFor="school">University / Institution</label>
-                <select id="school" name="school" value={formData.school} onChange={handleInputChange}>
-                  {GH_SCHOOLS.map((school) => (
-                    <option key={school.id} value={school.id}>{school.name}</option>
-                  ))}
+                <select 
+                  id="school" 
+                  name="school" 
+                  required
+                  value={formData.school} 
+                  onChange={handleInputChange}
+                  className="school-select-dropdown"
+                >
+                  <option value="">Select your school</option>
+                  {Array.isArray(GH_SCHOOLS) ? (
+                    GH_SCHOOLS.map((school) => (
+                      <option key={school.id} value={school.id}>{school.name}</option>
+                    ))
+                  ) : (
+                    Object.entries(GH_SCHOOLS).map(([key, value]) => (
+                      <option key={key} value={key}>{value}</option>
+                    ))
+                  )}
                 </select>
               </div>
             </>
@@ -119,7 +138,7 @@ export const Auth = ({ isRegisterMode = false }) => {
         </form>
 
         <div className="auth-footer">
-          <button onClick={() => setIsRegister(!isRegister)}>
+          <button type="button" onClick={() => setIsRegister(!isRegister)}>
             {isRegister ? 'Already have an account? Log In' : "Don't have an account? Sign Up"}
           </button>
         </div>

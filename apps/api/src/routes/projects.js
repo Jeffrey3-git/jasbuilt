@@ -3,7 +3,8 @@ import {
   createProject, 
   getAllProjects, 
   getProjectById, 
-  toggleUpvote 
+  toggleUpvote,
+  getLeaderboard // 🆕 Imported the leaderboard controller helper
 } from '../controllers/projects.js';
 import { createComment } from '../controllers/comments.js'; // 🆕 Import the new comment helper
 import { protect } from '../middleware/auth.js';
@@ -13,6 +14,10 @@ const router = express.Router();
 
 // Public Discover Streams
 router.get('/', getAllProjects);
+
+// 🚨 RESOLVED COLLISION: Placed firmly above /:id so Express resolves the explicit path first
+router.get('/leaderboard', getLeaderboard);  
+
 router.get('/:id', getProjectById); 
 
 // Protected Action Channels

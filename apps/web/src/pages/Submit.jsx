@@ -5,7 +5,8 @@ import { TECH_TAGS } from '../../../../packages/shared/src/index';
 
 export const Submit = () => {
   const navigate = useNavigate();
-  const { token } = useAuth();
+  // 🆕 Destructured user so we can access their registered school
+  const { token, user } = useAuth();
   
   const [formData, setFormData] = useState({
     title: '',
@@ -42,23 +43,19 @@ export const Submit = () => {
     setSubmitting(true);
     setError('');
 
-    // Tech Industry Standard: Creating an instance of FormData to stream binary files
     const submissionPayload = new FormData();
     submissionPayload.append('title', formData.title);
     submissionPayload.append('description', formData.description);
     submissionPayload.append('githubUrl', formData.githubUrl);
     submissionPayload.append('liveUrl', formData.liveUrl);
-    submissionPayload.append('image', imageFile); // Drops our binary stream file right in
-    
-    // ✅ CHANGED: Changed 'tags' to 'techStack' to match your backend parser keys
+    submissionPayload.append('image', imageFile);
     submissionPayload.append('techStack', JSON.stringify(selectedTags)); 
 
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/projects`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}` // Pass our shield token
-          // Note: DO NOT set 'Content-Type' header here. The browser automatically handles it for FormData with boundary markers.
+          'Authorization': `Bearer ${token}`
         },
         body: submissionPayload,
       });
@@ -68,7 +65,7 @@ export const Submit = () => {
       if (!response.ok) throw new Error(data.message || 'Failed to submit project.');
 
       alert('Build shipped successfully! 🚀');
-      navigate('/'); // Return successfully back home to the product feed
+      navigate('/');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -81,6 +78,13 @@ export const Submit = () => {
       <form onSubmit={handleSubmit} className="submit-card">
         <h2>Ship Your Build 🚀</h2>
         <p>Showcase your project to student developers across Ghana.</p>
+        
+        {/* 🆕 Visual Indicator: Confirms to the student exactly what school this project maps to */}
+        {user?.school && (
+          <div style={{ background: '#1e293b', padding: '10px 15px', borderRadius: '6px', marginBottom: '20px', fontSize: '0.85rem', color: '#94a3b8' }}>
+            Publishing as a student of: <strong style={{ color: '#ff4f00' }}>{user.school}</strong>
+          </div>
+        )}
 
         {error && <div className="error-banner">{error}</div>}
 

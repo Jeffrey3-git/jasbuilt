@@ -90,6 +90,35 @@ export const getAllProjects = async (req, res, next) => {
 };
 
 /**
+ * @route   GET /api/projects/leaderboard
+ * @desc    Fetch top 20 projects sorted by aggregate upvote counts
+ * @access  Public
+ */
+export const getLeaderboard = async (req, res, next) => {
+  try {
+    const projects = await prisma.project.findMany({
+      include: {
+        author: { 
+          select: { username: true, name: true, school: true, avatarUrl: true } 
+        },
+        _count: { 
+          select: { upvotes: true, comments: true } 
+        }
+      },
+      orderBy: {
+        upvotes: {
+          _count: 'desc' // 🔥 Dynamic count aggregation sorting
+        }
+      },
+      take: 20
+    });
+    res.status(200).json(projects);
+  } catch (error) { 
+    next(error); 
+  }
+};
+
+/**
  * @route   GET /api/projects/:id
  * @desc    Fetch a single project detail profile along with its comments
  * @access  Public

@@ -241,6 +241,12 @@ importers:
       express:
         specifier: ^5.2.1
         version: 5.2.1
+      express-rate-limit:
+        specifier: ^8.5.2
+        version: 8.5.2(express@5.2.1)
+      helmet:
+        specifier: ^8.2.0
+        version: 8.2.0
       morgan:
         specifier: ^1.11.0
         version: 1.11.0
@@ -250,6 +256,9 @@ importers:
       multer-storage-cloudinary:
         specifier: ^4.0.0
         version: 4.0.0(cloudinary@2.10.0)
+      xss-clean:
+        specifier: ^0.1.4
+        version: 0.1.4
     devDependencies:
       prisma:
         specifier: ^5.22.0
@@ -1189,6 +1198,12 @@ packages:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
 
+  express-rate-limit@8.5.2:
+    resolution: {integrity: sha512-5Kb34ipNX694DH48vN9irak1Qx30nb0PLYHXfJgw4YEjiC3ZEmZJhwOp+VfiCYwFzvFTdB9QkArYS5kXa2cx2A==}
+    engines: {node: '>= 16'}
+    peerDependencies:
+      express: '>= 4.11'
+
   express@5.2.1:
     resolution: {integrity: sha512-hIS4idWWai69NezIdRt2xFVofaF4j+6INOpJlVOLDO8zXGpUVEVzIYk12UUi2JzjEzWL3IOAxcTubgz9Po0yXw==}
     engines: {node: '>= 18'}
@@ -1282,6 +1297,10 @@ packages:
     resolution: {integrity: sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==}
     engines: {node: '>= 0.4'}
 
+  helmet@8.2.0:
+    resolution: {integrity: sha512-DRgTIUgnWcJ62KyarxxziuqYxKGnR6Rgg19BlbucN/dpmJbl1XOit6qvoOX0ZT+HhWe5OUVhU/a1zpGyc1xA0Q==}
+    engines: {node: '>=18.0.0'}
+
   hono@4.12.25:
     resolution: {integrity: sha512-2NFaIyNVgJmBs/ecmtGzlmluTFs5cHEWGTdu0t1HBwYzoGXOL5nUQBRMXsXWla5i4KkG//QMzVP88m1+I3fdAQ==}
     engines: {node: '>=16.9.0'}
@@ -1302,6 +1321,10 @@ packages:
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
+
+  ip-address@10.2.0:
+    resolution: {integrity: sha512-/+S6j4E9AHvW9SWMSEY9Xfy66O5PWvVEJ08O0y5JGyEKQpojb0K0GKpz/v5HJ/G0vi3D2sjGK78119oXZeE0qA==}
+    engines: {node: '>= 12'}
 
   ipaddr.js@1.9.1:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}
@@ -1845,6 +1868,13 @@ packages:
 
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+
+  xss-clean@0.1.4:
+    resolution: {integrity: sha512-4hArTFHYxrifK9VXOu/zFvwjTXVjKByPi6woUHb1IqxlX0Z4xtFBRjOhTKuYV/uE1VswbYsIh5vUEYp7MmoISQ==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
+  xss-filters@1.2.7:
+    resolution: {integrity: sha512-KzcmYT/f+YzcYrYRqw6mXxd25BEZCxBQnf+uXTopQDIhrmiaLwO+f+yLsIvvNlPhYvgff8g3igqrBxYh9k8NbQ==}
 
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
@@ -2645,6 +2675,11 @@ snapshots:
 
   etag@1.8.1: {}
 
+  express-rate-limit@8.5.2(express@5.2.1):
+    dependencies:
+      express: 5.2.1
+      ip-address: 10.2.0
+
   express@5.2.1:
     dependencies:
       accepts: 2.0.0
@@ -2759,6 +2794,8 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
+  helmet@8.2.0: {}
+
   hono@4.12.25: {}
 
   http-errors@2.0.1:
@@ -2778,6 +2815,8 @@ snapshots:
   immutable@5.1.6: {}
 
   inherits@2.0.4: {}
+
+  ip-address@10.2.0: {}
 
   ipaddr.js@1.9.1: {}
 
@@ -3286,6 +3325,12 @@ snapshots:
       isexe: 2.0.0
 
   wrappy@1.0.2: {}
+
+  xss-clean@0.1.4:
+    dependencies:
+      xss-filters: 1.2.7
+
+  xss-filters@1.2.7: {}
 
   yallist@3.1.1: {}
 

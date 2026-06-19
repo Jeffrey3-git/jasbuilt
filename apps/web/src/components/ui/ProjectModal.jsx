@@ -7,11 +7,21 @@ export function ProjectModal({ projectId, onClose }) {
   const [commentText, setCommentText] = useState('');
   const [loading, setLoading] = useState(true);
 
+  // Close modal when pressing Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   // Fetch single project profile data on mount
   useEffect(() => {
     async function fetchProjectDetails() {
       try {
-        const res = await fetch(`http://localhost:5000/api/projects/${projectId}`);
+        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const res = await fetch(`${baseUrl}/api/projects/${projectId}`);
         if (!res.ok) throw new Error('Failed to load project details.');
         const data = await res.json();
         setProject(data);
@@ -30,18 +40,18 @@ export function ProjectModal({ projectId, onClose }) {
     if (!commentText.trim()) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/projects/${projectId}/comments`, {
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${baseUrl}/api/projects/${projectId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ content: commentText }) // Matching our validated content schema key!
+        body: JSON.stringify({ content: commentText })
       });
 
       if (res.ok) {
         const newComment = await res.json();
-        // Append comment locally instantly
         setProject(prev => ({
           ...prev,
           comments: [newComment, ...prev.comments]
@@ -53,13 +63,20 @@ export function ProjectModal({ projectId, onClose }) {
     }
   };
 
-  if (loading) return <div className="modal-overlay"><span className="loader">Analyzing Build...</span></div>;
+  if (loading) {
+    return (
+      <div className="modal-overlay intense-blur">
+        <span className="loader">Analyzing Build...</span>
+      </div>
+    );
+  }
+  
   if (!project) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay intense-blur" onClick={onClose}>
       <div className="modal-card-content" onClick={e => e.stopPropagation()}>
-        <button className="close-btn" onClick={onClose}>&times;</button>
+        <button className="close-btn" onClick={onClose} aria-label="Close modal">&times;</button>
         
         <header className="modal-header">
           <h2>{project.title}</h2>
