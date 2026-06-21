@@ -4,11 +4,11 @@
 
 <div align="center">
   <!-- Dynamic Status Badges -->
-  <img src="https://shields.io" alt="React View" />
-  <img src="https://shields.io" alt="Express Server" />
-  <img src="https://shields.io" alt="Database" />
-  <img src="https://shields.io" alt="Cloudinary Storage" />
-  <img src="https://shields.io" alt="PNPM Monorepo" />
+  <img src="https://img.shields.io/badge/Platform-React_v19-61dafb?style=for-the-badge&logo=react&logoColor=black" alt="React View" />
+  <img src="https://img.shields.io/badge/Backend-Express_Node-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Express Server" />
+  <img src="https://img.shields.io/badge/Database-PostgreSQL-4169e1?style=for-the-badge&logo=postgresql&logoColor=white" alt="Database" />
+  <img src="https://img.shields.io/badge/Storage-Cloudinary-F5C842?style=for-the-badge&logo=cloudinary&logoColor=black" alt="Cloudinary Storage" />
+  <img src="https://img.shields.io/badge/Workspace-PNPM_Monorepo-F68712?style=for-the-badge&logo=pnpm&logoColor=white" alt="PNPM Monorepo" />
 </div>
 
 <br />
