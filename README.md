@@ -25,8 +25,9 @@
 ## 📸 Interface Preview
 
 <div align="center">
-  <!-- My images screenshots here! -->
-  <img src="apps/web/src/assets/image_682005.jpg" width="100%" alt="jasBuilt Core Interface Grid" style="border-radius: 12px; border: 1px solid #242B3A;" />
+  <img width="1341" height="618" alt="Feed" src="https://github.com/user-attachments/assets/c50e6b17-8d19-4ed5-a53b-f27fad0730c1" />
+  <img width="1341" height="622" alt="Leaderboard Page" src="https://github.com/user-attachments/assets/a211ec50-b5d1-4311-811e-f7982443a28b" />
+  <img width="1346" height="613" alt="User Page" src="https://github.com/user-attachments/assets/1cd6ad5a-d627-4a79-8655-1cf62348c7c9" />
 </div>
 
 ---
