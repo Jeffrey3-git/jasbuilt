@@ -1,0 +1,106 @@
+# 🚀 jasBuilt
+
+---
+
+<div align="center">
+  <!-- Dynamic Status Badges -->
+  <img src="https://shields.io" alt="React View" />
+  <img src="https://shields.io" alt="Express Server" />
+  <img src="https://shields.io" alt="Database" />
+  <img src="https://shields.io" alt="Cloudinary Storage" />
+  <img src="https://shields.io" alt="PNPM Monorepo" />
+</div>
+
+<br />
+
+<div align="center">
+  <h3>⚡ The Product Hunt for Ghanaian Student Developers ⚡</h3>
+  <p>Discover, explore, upvote, and discuss software applications built entirely across local university campuses.</p>
+  <a href="#-getting-started">Explore the Docs</a> •
+  <a href="#-key-features">View Features</a>
+</div>
+
+---
+
+## 📸 Interface Preview
+
+<div align="center">
+  <!-- My images screenshots here! -->
+  <img src="apps/web/src/assets/image_682005.jpg" width="100%" alt="jasBuilt Core Interface Grid" style="border-radius: 12px; border: 1px solid #242B3A;" />
+</div>
+
+---
+
+## ✨ Key Features
+
+* **📦 Monorepo Architecture:** Driven by `pnpm workspaces` separating shared logic packages completely from isolated UI and server deployment bundles.
+* **🔍 Instant Discovery Engine:** In-memory client-side filters allowing users to search by text, filter by institution, or sort dynamically by technology stack with zero latency.
+* **🔺 Optimistic UI Upvote Loop:** Real-time feedback upvote counters that instantly increment visually while executing atomic background transactions against the database.
+* **💬 Rich Feedback Stream:** High-velocity comment overlays attached directly to individual build profiles mapping custom schemas flawlessly.
+* **🥇 Dynamic Leaderboard:** Real-time standing tables grouping database aggregates by upvote counts using custom Prisma validation tracking.
+* **🛡️ Hardened API Security:** Shielded against core entry vectors via robust input sanitization, strict body parser constraints (`10kb`), and XSS middleware bindings.
+
+---
+
+## 🏗️ Architecture Blueprint
+
+The project follows a strictly typed, unified monorepo system pattern:
+
+| Directory Path | Focus Layer | Core Dependency Stack |
+| :--- | :--- | :--- |
+| **`apps/web`** | Frontend / View Shell | React 19, Vite, SCSS Layouts, React Router v7 |
+| **`apps/api`** | Backend Server Engine | Node.js, Express, Prisma ORM, Helmet, Multer |
+| **`packages/shared`** | Shared Utilities | Cross-workspace validation arrays (`GH_SCHOOLS`, `TECH_TAGS`) |
+
+---
+
+## 🚦 Getting Started
+
+### Prerequisites
+Make sure you have [Node.js](https://nodejs.org) and [PNPM](https://pnpm.io) globally operational on your computer.
+
+### 1. Setup Local Repositories
+Clone the project space and enter the directory layout root:
+```bash
+git clone https://github.com
+cd jasbuilt
+```
+
+### 2. Install Workspace Monorepo Dependencies
+Run the global structural bootstrap command via pnpm:
+```bash
+pnpm install
+```
+
+### 3. Configure Your Environment Keys
+Create an `.env` file inside `apps/api/`:
+```env
+DATABASE_URL="postgresql://username:password@localhost:5432/jasbuilt_db?schema=public"
+JWT_SECRET="your_ultra_secure_dev_jwt_secret_key"
+CLOUDINARY_CLOUD_NAME="your_cloudinary_cloud_name"
+CLOUDINARY_API_KEY="your_api_key"
+CLOUDINARY_API_SECRET="your_api_secret"
+```
+
+Create an `.env` file inside `apps/web/`:
+```env
+VITE_API_URL="http://localhost:5000"
+```
+
+### 4. Seed and Sync Your Database Schema
+Push your database mapping rules up to your local PostgreSQL instance:
+```bash
+pnpm --filter api prisma db push
+```
+
+### 5. Fire Up the Development Workspace
+Boot the entire engine (both frontend dashboard and server endpoints simultaneously):
+```bash
+pnpm dev
+```
+Your frontend layer will immediately launch at 🌐 http://localhost:5173!
+
+---
+
+## 📄 License
+Distributed under the MIT License. See LICENSE for details.
