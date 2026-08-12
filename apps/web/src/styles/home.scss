@@ -5,7 +5,6 @@
   margin: 0 auto;
   padding: 3rem 2rem;
 
-  // 🆕 COMPONENT UPGRADE: Fixed floating position so it locks completely at the top boundary
   .feed-hero {
     display: flex;
     justify-content: space-between;
@@ -14,13 +13,6 @@
     margin-bottom: 3rem;
     border-bottom: 1px solid $color-border-dark;
     padding-bottom: 2.5rem;
-    
-    // Fixed: Set to 0 so it aligns perfectly to the very top edge of its parent frame
-    position: sticky;
-    top: 0; 
-    background: var(--color-background, #0b0f17); 
-    z-index: 10;
-    margin-top: 0; 
 
     @media (max-width: 768px) {
       flex-direction: column;

@@ -25,7 +25,10 @@ const GlobalNavigationBar = () => {
       zIndex: 1000
     }}>
       <div className="nav-brand" style={{ fontWeight: 800, fontSize: '1.25rem', letterSpacing: '-0.025em' }}>
-        <Link to="/" style={{ color: '#f8fafc', textDecoration: 'none' }}>🚀 JASBuilt</Link>
+        <Link to="/" style={{ color: '#f8fafc', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <img src="/favicon.svg" alt="" width="24" height="24" style={{ borderRadius: '5px' }} />
+          JASBuilt
+        </Link>
       </div>
 
       <div className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
