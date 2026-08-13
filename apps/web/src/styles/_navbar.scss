@@ -1,0 +1,87 @@
+@import 'tokens';
+
+.global-navbar {
+  position: sticky;
+  top: 0;
+  background: $color-bg-dark;
+  border-bottom: 1px solid $color-border-dark;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+
+  .nav-brand {
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.025em;
+
+    a {
+      color: $color-text-main;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      img {
+        border-radius: $radius-sm;
+      }
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    color: $color-text-muted;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: $transition-smooth;
+
+    &:hover {
+      color: $color-text-main;
+    }
+  }
+
+  .nav-link-accent {
+    color: $color-primary;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .nav-username {
+    color: $color-text-muted;
+    font-size: 0.9rem;
+  }
+
+  .btn-logout {
+    background: none;
+    border: 1px solid $color-border-dark;
+    color: $color-danger;
+    padding: 0.4rem 0.8rem;
+    border-radius: $radius-sm;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: $transition-smooth;
+
+    &:hover {
+      background: rgba($color-danger, 0.1);
+    }
+  }
+
+  .btn-signin {
+    background: $color-primary;
+    color: $color-text-main;
+    padding: 0.5rem 1rem;
+    border-radius: $radius-sm;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: $transition-smooth;
+
+    &:hover {
+      background: $color-primary-hover;
+    }
+  }
+}
