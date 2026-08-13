@@ -6,7 +6,6 @@ import { TECH_TAGS } from '../../../../packages/shared/src/index';
 
 export const Submit = () => {
   const navigate = useNavigate();
-  // 🆕 Destructured user so we can access their registered school
   const { token, user } = useAuth();
   
   const [formData, setFormData] = useState({
@@ -83,10 +82,9 @@ export const Submit = () => {
         </h2>
         <p>Showcase your project to student developers across Ghana.</p>
         
-        {/* 🆕 Visual Indicator: Confirms to the student exactly what school this project maps to */}
         {user?.school && (
-          <div style={{ background: '#1e293b', padding: '10px 15px', borderRadius: '6px', marginBottom: '20px', fontSize: '0.85rem', color: '#94a3b8' }}>
-            Publishing as a student of: <strong style={{ color: '#ff4f00' }}>{user.school}</strong>
+          <div className="school-indicator">
+            Publishing as a student of: <strong>{user.school}</strong>
           </div>
         )}
 

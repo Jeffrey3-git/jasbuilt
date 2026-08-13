@@ -7,16 +7,14 @@ export const Auth = ({ isRegisterMode = false }) => {
   const navigate = useNavigate();
   const { loginSession } = useAuth();
   
-  // 🚨 FIXED: Controlled local state instance instead of relying on immutable static prop references
   const [isRegister, setIsRegister] = useState(isRegisterMode);
-  
-  // Single consolidated state object for form fields
+
   const [formData, setFormData] = useState({
     email: '',
     username: '',
     password: '',
     name: '',
-    school: GH_SCHOOLS && GH_SCHOOLS.length > 0 ? GH_SCHOOLS[0].id : '' // Safe asset default fallback
+    school: GH_SCHOOLS && GH_SCHOOLS.length > 0 ? GH_SCHOOLS[0].id : ''
   });
   
   const [error, setError] = useState('');
@@ -32,11 +30,9 @@ export const Auth = ({ isRegisterMode = false }) => {
     setSubmitting(true);
     setError('');
 
-    // 🚨 FIXED: Tracks dynamic state variable isRegister instead of fixed component layout props
     const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
-    
-    // Payload adaptation based on route criteria
-    const payload = isRegister 
+
+    const payload = isRegister
       ? formData 
       : { emailOrUsername: formData.email || formData.username, password: formData.password };
 
@@ -81,7 +77,6 @@ export const Auth = ({ isRegisterMode = false }) => {
                 <input type="text" id="name" name="name" required value={formData.name} onChange={handleInputChange} placeholder="Kofi Mensah" />
               </div>
 
-              {/* ✅ ENHANCED dropdown with explicit class and semantic layout values */}
               <div className="form-group">
                 <label htmlFor="school">University / Institution</label>
                 <select 

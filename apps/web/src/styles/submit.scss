@@ -27,6 +27,19 @@
     }
     p { color: $color-text-muted; font-size: 0.95rem; margin-top: -1rem; }
 
+    .school-indicator {
+      background: $color-border-dark;
+      padding: 10px 15px;
+      border-radius: $radius-sm;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+      color: $color-text-muted;
+
+      strong {
+        color: $color-accent-cyan;
+      }
+    }
+
     .error-banner {
       background: rgba($color-danger, 0.1);
       border: 1px solid $color-danger;

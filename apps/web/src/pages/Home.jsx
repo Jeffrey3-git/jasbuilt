@@ -2,70 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Rocket, MessageCircle, SearchX, Sparkles } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import { GH_SCHOOLS, TECH_TAGS, formatUpvoteCount } from '../../../../packages/shared/src/index';
+import { GH_SCHOOLS, TECH_TAGS } from '../../../../packages/shared/src/index';
 import { ProjectModal } from '../components/ui/ProjectModal';
-
-// Dedicated Sub-Component for Interactive Upvote State
-const UpvoteButton = ({ projectId, initialCount, initialHasUpvoted }) => {
-  const { isAuthenticated, token } = useAuth();
-  const [count, setCount] = useState(initialCount);
-  const [hasUpvoted, setHasUpvoted] = useState(initialHasUpvoted);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleUpvote = async (e) => {
-    e.preventDefault();
-
-    if (!isAuthenticated || isSubmitting) return;
-
-    const previousCount = count;
-    const previousHasUpvoted = hasUpvoted;
-
-    setIsSubmitting(true);
-
-    setHasUpvoted(!hasUpvoted);
-    setCount(prev => (hasUpvoted ? prev - 1 : prev + 1));
-
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/projects/${projectId}/upvote`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Upvote failed');
-      }
-
-      const data = await response.json();
-      setHasUpvoted(data.upvoted);
-    } catch (error) {
-      console.error('Network failure recording upvote:', error);
-
-      setHasUpvoted(previousHasUpvoted);
-      setCount(previousCount);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <button
-      className={`upvote-action-pill ${hasUpvoted ? 'active' : ''}`}
-      onClick={handleUpvote}
-      disabled={!isAuthenticated || isSubmitting}
-      title={!isAuthenticated ? 'Log in to upvote builds' : undefined}
-      style={{ cursor: isAuthenticated ? 'pointer' : 'not-allowed' }}
-    >
-      <span className="arrow">▲</span>
-      <span>{formatUpvoteCount(count)}</span>
-    </button>
-  );
-};
+import { UpvoteButton } from '../components/ui/UpvoteButton';
 
 export const Home = () => {
   const { isAuthenticated } = useAuth();

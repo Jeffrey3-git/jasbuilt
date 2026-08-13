@@ -48,14 +48,13 @@ export function Profile() {
           {profile.projects?.map(project => (
             <article key={project.id} className="project-card">
               
-              {/* 🛡️ IMAGE EDGE CASE FIX: Automatically falls back if link breaks */}
-              <img 
-                src={project.imageUrl} 
-                alt={project.title} 
+              <img
+                src={project.imageUrl}
+                alt={project.title}
                 className="card-img"
                 onError={(e) => {
-                  e.target.onerror = null; 
-                  e.target.src = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500'; // Sleek dark abstract placeholder
+                  e.target.onerror = null;
+                  e.target.src = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500';
                 }}
               />
 

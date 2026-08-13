@@ -3,7 +3,6 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  // ✅ ENHANCEMENT: Use lazy initializers so localStorage reads only fire ONCE on mount, not on every render
   const [token, setToken] = useState(() => localStorage.getItem('jasbuilt_token'));
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('jasbuilt_user');
@@ -12,7 +11,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Context state restoration now safely completes before lifting the screen curtain
     setLoading(false);
   }, []);
 

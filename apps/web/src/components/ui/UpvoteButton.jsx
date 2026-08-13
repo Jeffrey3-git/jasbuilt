@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { formatUpvoteCount } from '../../../../../packages/shared/src/index';
 
 export const UpvoteButton = ({ projectId, initialCount, initialHasUpvoted }) => {
   const { token, isAuthenticated } = useAuth();
@@ -8,17 +9,10 @@ export const UpvoteButton = ({ projectId, initialCount, initialHasUpvoted }) => 
   const [isSyncing, setIsSyncing] = useState(false);
 
   const handleUpvoteClick = async (e) => {
-    e.preventDefault(); // Prevent accidental page bubbling/navigation actions
-    
-    if (!isAuthenticated) {
-      alert('Please log in to upvote student projects.');
-      return;
-    }
+    e.preventDefault();
 
-    if (isSyncing) return; // Prevent double-click network spamming
+    if (!isAuthenticated || isSyncing) return;
 
-    // --- THE OPTIMISTIC UI FLIP ---
-    // Change states instantly before the network response arrives
     const previousCount = count;
     const previousHasUpvoted = hasUpvoted;
 
@@ -35,16 +29,12 @@ export const UpvoteButton = ({ projectId, initialCount, initialHasUpvoted }) => 
       });
 
       if (!response.ok) {
-        throw new Error('Network synchronization sync failed.');
+        throw new Error('Upvote failed');
       }
-      
+
       const data = await response.json();
-      // Ensure local state perfectly reflects the server's definitive response
-      // ✅ FIX: Changed from data.hasUpvoted to data.upvoted to match server payload
       setHasUpvoted(data.upvoted);
     } catch (error) {
-      // --- THE ROLLBACK ---
-      // If the internet cut out, silently undo our optimistic assumptions
       console.error('Rolling back optimistic vote update:', error);
       setCount(previousCount);
       setHasUpvoted(previousHasUpvoted);
@@ -54,13 +44,15 @@ export const UpvoteButton = ({ projectId, initialCount, initialHasUpvoted }) => 
   };
 
   return (
-    <button 
-      className={`upvote-action-pill ${hasUpvoted ? 'active' : ''}`} 
+    <button
+      className={`upvote-action-pill ${hasUpvoted ? 'active' : ''}`}
       onClick={handleUpvoteClick}
-      title={hasUpvoted ? "Remove upvote" : "Upvote this project"}
+      disabled={!isAuthenticated || isSyncing}
+      title={!isAuthenticated ? 'Log in to upvote builds' : hasUpvoted ? 'Remove upvote' : 'Upvote this project'}
+      style={{ cursor: isAuthenticated ? 'pointer' : 'not-allowed' }}
     >
       <span className="arrow">▲</span>
-      <span className="count">{count}</span>
+      <span className="count">{formatUpvoteCount(count)}</span>
     </button>
   );
 };
