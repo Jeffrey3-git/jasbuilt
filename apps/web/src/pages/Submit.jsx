@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Rocket } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { TECH_TAGS } from '../../../../packages/shared/src/index';
 
@@ -64,7 +65,7 @@ export const Submit = () => {
 
       if (!response.ok) throw new Error(data.message || 'Failed to submit project.');
 
-      alert('Build shipped successfully! 🚀');
+      alert('Build shipped successfully!');
       navigate('/');
     } catch (err) {
       setError(err.message);
@@ -76,7 +77,10 @@ export const Submit = () => {
   return (
     <div className="submit-container">
       <form onSubmit={handleSubmit} className="submit-card">
-        <h2>Ship Your Build 🚀</h2>
+        <h2>
+          Ship Your Build
+          <Rocket size={20} strokeWidth={2.25} />
+        </h2>
         <p>Showcase your project to student developers across Ghana.</p>
         
         {/* 🆕 Visual Indicator: Confirms to the student exactly what school this project maps to */}

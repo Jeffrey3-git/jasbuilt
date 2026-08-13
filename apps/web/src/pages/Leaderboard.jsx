@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Sparkles, ArrowUp, MessageCircle } from 'lucide-react';
 
 export function Leaderboard() {
   const [rankedBuilds, setRankedBuilds] = useState([]);
@@ -35,7 +36,8 @@ export function Leaderboard() {
       <div className="leaderboard-list">
         {rankedBuilds.length === 0 ? (
           <div className="feed-status-wrapper empty-state">
-            <h3>No entries ranked yet 🌌</h3>
+            <Sparkles size={28} strokeWidth={1.75} className="empty-state-icon" />
+            <h3>No entries ranked yet</h3>
             <p>Upvote projects on the main feed to build up the standings list!</p>
           </div>
         ) : (
@@ -56,10 +58,12 @@ export function Leaderboard() {
 
                 <div className="metrics-col">
                   <div className="metric-pill upvotes">
-                    🔺 {project._count?.upvotes || 0} Votes
+                    <ArrowUp size={14} strokeWidth={2.5} />
+                    {project._count?.upvotes || 0} Votes
                   </div>
                   <div className="metric-pill comments">
-                    💬 {project._count?.comments || 0} Comments
+                    <MessageCircle size={14} strokeWidth={2.25} />
+                    {project._count?.comments || 0} Comments
                   </div>
                 </div>
               </div>

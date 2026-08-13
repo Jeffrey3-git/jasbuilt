@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Rocket, MessageCircle, SearchX, Sparkles } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { GH_SCHOOLS, TECH_TAGS, formatUpvoteCount } from '../../../../packages/shared/src/index';
 import { ProjectModal } from '../components/ui/ProjectModal';
@@ -135,7 +136,8 @@ export const Home = () => {
 
         {isAuthenticated && (
           <Link to="/submit" className="btn-ship">
-            <span>Ship Something</span> 🚀
+            <span>Ship Something</span>
+            <Rocket size={16} strokeWidth={2.25} />
           </Link>
         )}
       </header>
@@ -194,7 +196,8 @@ export const Home = () => {
         </div>
       ) : projects.length === 0 ? (
         <div className="feed-status-wrapper empty-state">
-          <h3>No builds shipped here yet 🌌</h3>
+          <Sparkles size={28} strokeWidth={1.75} className="empty-state-icon" />
+          <h3>No builds shipped here yet</h3>
           <p>Be the first to break the ice for this tech category!</p>
 
           {!isAuthenticated && (
@@ -205,7 +208,8 @@ export const Home = () => {
         </div>
       ) : filteredProjects.length === 0 ? (
         <div className="feed-status-wrapper empty-state">
-          <h3>No matching projects found 🔍</h3>
+          <SearchX size={28} strokeWidth={1.75} className="empty-state-icon" />
+          <h3>No matching projects found</h3>
           <p>Try a different search term.</p>
         </div>
       ) : (
@@ -260,7 +264,8 @@ export const Home = () => {
                     />
 
                     <span className="stat-pill comment-pill">
-                      💬 {project._count.comments}
+                      <MessageCircle size={14} strokeWidth={2.25} />
+                      {project._count.comments}
                     </span>
                   </div>
 

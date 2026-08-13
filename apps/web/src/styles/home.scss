@@ -51,6 +51,9 @@
       font-weight: 600;
       transition: $transition-smooth;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
 
       &:hover {
         background: $color-primary-hover;
@@ -159,6 +162,11 @@
     &.empty-state h3 {
       color: $color-text-main;
       margin-bottom: 0.5rem;
+    }
+
+    .empty-state-icon {
+      color: $color-text-muted;
+      margin-bottom: 1rem;
     }
 
     .btn-text-link {
@@ -319,6 +327,9 @@
               border-radius: 4px;
               font-weight: 600;
               background: $color-bg-dark;
+              display: inline-flex;
+              align-items: center;
+              gap: 0.3rem;
 
               &.upvote-pill {
                 color: $color-accent-green;
@@ -600,6 +611,9 @@
           font-weight: 700;
           background: #0b0f17;
           border: 1px solid #242b3a;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.3rem;
 
           &.upvotes { color: #34d399; border-color: rgba(#34d399, 0.2); }
           &.comments { color: #94a3b8; }

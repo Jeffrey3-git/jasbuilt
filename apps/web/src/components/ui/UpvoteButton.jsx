@@ -11,7 +11,7 @@ export const UpvoteButton = ({ projectId, initialCount, initialHasUpvoted }) => 
     e.preventDefault(); // Prevent accidental page bubbling/navigation actions
     
     if (!isAuthenticated) {
-      alert('Please log in to upvote student projects! 🚀');
+      alert('Please log in to upvote student projects.');
       return;
     }
 

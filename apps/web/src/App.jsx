@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { Trophy } from 'lucide-react';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 
 import { Home } from './pages/Home';
@@ -22,7 +23,10 @@ const GlobalNavigationBar = () => {
 
       <div className="nav-links">
         <Link to="/" className="nav-link">Feed</Link>
-        <Link to="/leaderboard" className="nav-link-accent">🏆 Leaderboard</Link>
+        <Link to="/leaderboard" className="nav-link-accent">
+          <Trophy size={15} strokeWidth={2.25} />
+          Leaderboard
+        </Link>
 
         {isAuthenticated ? (
           <>
