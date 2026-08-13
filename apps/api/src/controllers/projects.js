@@ -12,14 +12,13 @@ export const createProject = async (req, res, next) => {
       return res.status(400).json({ message: 'A project screenshot image upload is required.' });
     }
 
-    // ✅ FIXED: Changed 'tags' to 'techStack' to match what frontend FormData appends
-    const { title, description, githubUrl, liveUrl, techStack } = req.body;
+    // 'techStack' is the name the frontend FormData appends under; maps to the schema's 'tags' field
+    const { title, description, githubUrl, liveUrl, techStack, feedbackRequest } = req.body;
 
     if (!title || !description || !githubUrl || !techStack) {
       return res.status(400).json({ message: 'Missing core descriptive text fields.' });
     }
 
-    // ✅ FIXED: Parse 'techStack' string array back into clean JavaScript array
     const parsedTags = typeof techStack === 'string' ? JSON.parse(techStack) : techStack;
 
     // 2. Database Insertion with Live Cloudinary CDN URL
@@ -31,6 +30,7 @@ export const createProject = async (req, res, next) => {
         githubUrl,
         liveUrl,
         tags: parsedTags, // Maps perfectly to Prisma schema's 'tags' property string array
+        feedbackRequest: feedbackRequest?.trim() ? feedbackRequest.trim() : null,
         authorId: req.user.id
       },
       include: {
@@ -56,16 +56,19 @@ export const createProject = async (req, res, next) => {
  */
 export const getAllProjects = async (req, res, next) => {
   try {
-    const { tag, school } = req.query;
+    const { tag, school, seekingFeedback } = req.query;
 
     // Dynamic Filter Build Engine (Tech Industry Pattern)
     const whereClause = {};
-    
+
     if (tag) {
       whereClause.tags = { has: tag };
     }
     if (school) {
       whereClause.author = { school: school.toUpperCase() };
+    }
+    if (seekingFeedback === 'true') {
+      whereClause.feedbackRequest = { not: null };
     }
 
     const projects = await prisma.project.findMany({

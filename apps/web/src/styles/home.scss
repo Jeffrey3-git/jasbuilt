@@ -132,6 +132,31 @@
         }
       }
     }
+
+    .feedback-filter-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 10px 15px;
+      border-radius: 6px;
+      border: 1px solid $color-border-dark;
+      color: $color-text-muted;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: $transition-smooth;
+
+      &:has(input:checked) {
+        border-color: $color-accent-cyan;
+        color: $color-accent-cyan;
+      }
+
+      input {
+        accent-color: $color-accent-cyan;
+        cursor: pointer;
+      }
+    }
   }
 
   .feed-status-wrapper {
@@ -236,6 +261,13 @@
         .card-header {
           margin-bottom: 0.75rem;
 
+          .card-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+          }
+
           h3 {
             font-size: 1.25rem;
             color: $color-text-main;
@@ -244,6 +276,20 @@
           .author-tag {
             font-size: 0.85rem;
             color: $color-text-muted;
+          }
+
+          .feedback-request-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: $color-accent-cyan;
+            background: rgba($color-accent-cyan, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
           }
         }
 
@@ -460,6 +506,34 @@
         margin-bottom: 15px;
       }
       .description-text { color: $color-text-muted; line-height: 1.6; font-size: 0.95rem; }
+    }
+
+    .feedback-request-callout {
+      display: flex;
+      gap: 0.75rem;
+      background: rgba($color-accent-cyan, 0.08);
+      border: 1px solid rgba($color-accent-cyan, 0.3);
+      border-radius: $radius-sm;
+      padding: 0.9rem 1rem;
+      margin-bottom: 24px;
+      color: $color-accent-cyan;
+
+      svg {
+        flex-shrink: 0;
+        margin-top: 0.15rem;
+      }
+
+      strong {
+        display: block;
+        font-size: 0.85rem;
+        margin-bottom: 0.2rem;
+      }
+
+      p {
+        color: $color-text-muted;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
     }
 
     .comments-section {

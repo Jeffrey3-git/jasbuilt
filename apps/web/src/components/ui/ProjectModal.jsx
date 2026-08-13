@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { MessageSquareText } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
 export function ProjectModal({ projectId, onClose }) {
@@ -88,9 +89,19 @@ export function ProjectModal({ projectId, onClose }) {
           <p className="description-text">{project.description}</p>
         </div>
 
+        {project.feedbackRequest && (
+          <div className="feedback-request-callout">
+            <MessageSquareText size={16} strokeWidth={2.25} />
+            <div>
+              <strong>Looking for feedback on:</strong>
+              <p>{project.feedbackRequest}</p>
+            </div>
+          </div>
+        )}
+
         <section className="comments-section">
           <h3>Feedback Stream ({project.comments?.length || 0})</h3>
-          
+
           {token ? (
             <form onSubmit={handleCommentSubmit} className="comment-form">
               <input 

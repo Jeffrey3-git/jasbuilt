@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Rocket, MessageCircle, SearchX, Sparkles } from 'lucide-react';
+import { Rocket, MessageCircle, SearchX, Sparkles, MessageSquareText } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { GH_SCHOOLS, TECH_TAGS } from '../../../../packages/shared/src/index';
 import { ProjectModal } from '../components/ui/ProjectModal';
@@ -17,6 +17,7 @@ export const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSchool, setSelectedSchool] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
+  const [seekingFeedbackOnly, setSeekingFeedbackOnly] = useState(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -27,6 +28,7 @@ export const Home = () => {
 
         if (selectedSchool) queryParams.append('school', selectedSchool);
         if (selectedTag) queryParams.append('tag', selectedTag);
+        if (seekingFeedbackOnly) queryParams.append('seekingFeedback', 'true');
 
         const response = await fetch(
           `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/projects?${queryParams.toString()}`
@@ -45,7 +47,7 @@ export const Home = () => {
     };
 
     fetchProjects();
-  }, [selectedSchool, selectedTag]);
+  }, [selectedSchool, selectedTag, seekingFeedbackOnly]);
 
   // Client-side instant search
   const filteredProjects = projects.filter((project) => {
@@ -125,6 +127,16 @@ export const Home = () => {
             ))}
           </select>
         </div>
+
+        <label className="feedback-filter-toggle">
+          <input
+            type="checkbox"
+            checked={seekingFeedbackOnly}
+            onChange={(e) => setSeekingFeedbackOnly(e.target.checked)}
+          />
+          <MessageSquareText size={14} strokeWidth={2.25} />
+          Seeking Feedback
+        </label>
       </section>
 
       {/* Projects Grid Execution */}
@@ -173,7 +185,15 @@ export const Home = () => {
 
               <div className="card-body">
                 <div className="card-header">
-                  <h3>{project.title}</h3>
+                  <div className="card-title-row">
+                    <h3>{project.title}</h3>
+                    {project.feedbackRequest && (
+                      <span className="feedback-request-badge">
+                        <MessageSquareText size={12} strokeWidth={2.25} />
+                        Seeking feedback
+                      </span>
+                    )}
+                  </div>
                   <p className="author-tag">
                     by @{project.author.username}
                   </p>

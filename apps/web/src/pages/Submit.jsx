@@ -13,6 +13,7 @@ export const Submit = () => {
     description: '',
     githubUrl: '',
     liveUrl: '',
+    feedbackRequest: '',
   });
   const [selectedTags, setSelectedTags] = useState([]);
   const [imageFile, setImageFile] = useState(null);
@@ -49,7 +50,8 @@ export const Submit = () => {
     submissionPayload.append('githubUrl', formData.githubUrl);
     submissionPayload.append('liveUrl', formData.liveUrl);
     submissionPayload.append('image', imageFile);
-    submissionPayload.append('techStack', JSON.stringify(selectedTags)); 
+    submissionPayload.append('techStack', JSON.stringify(selectedTags));
+    submissionPayload.append('feedbackRequest', formData.feedbackRequest);
 
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/projects`, {
@@ -125,6 +127,17 @@ export const Submit = () => {
               </button>
             ))}
           </div>
+        </div>
+
+        <div className="form-group">
+          <label>Looking for Feedback? (Optional)</label>
+          <textarea
+            name="feedbackRequest"
+            value={formData.feedbackRequest}
+            onChange={handleInputChange}
+            placeholder="e.g. Is my auth flow secure? Does the onboarding feel confusing? Tell reviewers exactly what to look at."
+            rows="3"
+          />
         </div>
 
         <button type="submit" disabled={submitting} className="btn-submit">
