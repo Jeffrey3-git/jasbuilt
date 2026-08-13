@@ -28,7 +28,7 @@ export function Leaderboard() {
   return (
     <div className="leaderboard-container">
       <header className="leaderboard-header">
-        <span className="tag-pill-orange">Standings</span>
+        <span className="tag-pill">Standings</span>
         <h1>Ecosystem Leaderboard</h1>
         <p>The most upvoted software applications built across local campuses this week.</p>
       </header>

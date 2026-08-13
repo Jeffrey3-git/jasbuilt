@@ -75,7 +75,7 @@
   }
 
   .btn-signin {
-    background: $color-primary;
+    background: $color-cta;
     color: $color-text-main;
     padding: 0.5rem 1rem;
     border-radius: $radius-sm;
@@ -84,7 +84,7 @@
     transition: $transition-smooth;
 
     &:hover {
-      background: $color-primary-hover;
+      background: $color-cta-hover;
     }
   }
 }

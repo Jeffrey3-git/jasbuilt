@@ -5,16 +5,22 @@
 // Color Palette
 $color-bg-dark: #0a0f1d;       // Deep space nebula background
 $color-surface-dark: #12192c;  // Circuit-board/Card containers
+$color-surface-alt: #161b25;   // Elevated surfaces (modals, leaderboard rows)
 $color-border-dark: #1e294b;   // Deep indigo lines
+$color-border-alt: #242b3a;    // Lighter border, used on surface-alt
 $color-text-main: #f8fafc;     // Clean, crisp white text
 $color-text-muted: #94a3b8;    // Accessible slate gray for descriptions
+$color-text-dim: #64748b;      // Tertiary text (timestamps, secondary metadata)
 
-// Accents (Product Hunt Vibe meets Tech Ghana)
-$color-primary: #ff4f00;       // Product Hunt energetic orange
-$color-primary-hover: #e04500;
+// Accents — derived from the JASBuilt mark (blue diamond, cyan "J")
+$color-primary: #3b82f6;        // Brand blue — links, borders, default interactive states
+$color-primary-hover: #2563eb;
+$color-accent-cyan: #22d3ee;    // Signature highlight — informational badges only
+$color-cta: #ff6a00;            // Warm call-to-action — reserved for primary actions (Ship, Sign In)
+$color-cta-hover: #e55f00;
 $color-accent-green: #10b981;   // For upvotes and growth states
 $color-accent-gold: #f59e0b;    // Representing GH talent and excellence
-$color-danger: #ef4444;         // Destructive actions (logout, delete)
+$color-danger: #ef4444;         // Destructive actions and error states
 
 // Typography
 $font-sans: 'Inter', system-ui, -apple-system, sans-serif;
