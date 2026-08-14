@@ -24,12 +24,6 @@
       "prettier --write"
     ]
   },
-  "dependencies": {
-    "bcrypt": "^6.0.0",
-    "bcryptjs": "^3.0.3",
-    "jsonwebtoken": "^9.0.3",
-    "react-router-dom": "^7.17.0"
-  },
   "devDependencies": {
     "prisma": "^7.8.0"
   }

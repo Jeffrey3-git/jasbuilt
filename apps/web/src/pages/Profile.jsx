@@ -10,7 +10,8 @@ export function Profile() {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const res = await fetch(`http://localhost:5000/api/users/profile/${username}`);
+        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const res = await fetch(`${baseUrl}/api/users/profile/${username}`);
         if (!res.ok) throw new Error('Profile not found');
         const data = await res.json();
         setProfile(data);
