@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <clipPath id="bound"><rect width="100" height="100" rx="20"/></clipPath>
+  </defs>
+
+  <!-- background -->
+  <rect width="100" height="100" rx="20" fill="#060408"/>
+
+  <!-- orange glow bottom-left -->
+  <circle cx="18" cy="82" r="48" fill="#ff6a00" opacity="0.12" clip-path="url(#bound)"/>
+  <circle cx="14" cy="88" r="28" fill="#ff9500" opacity="0.09" clip-path="url(#bound)"/>
+
+  <!-- cyan glow top-right -->
+  <circle cx="82" cy="18" r="40" fill="#00e5ff" opacity="0.08" clip-path="url(#bound)"/>
+
+  <!-- blue diamond -->
+  <rect x="50" y="14" width="50" height="50" rx="5"
+    fill="#0d2444" stroke="#3b82f6" stroke-width="1.2"
+    transform="rotate(45 50 39)"
+    clip-path="url(#bound)"/>
+
+  <!-- inner diamond border -->
+  <rect x="50" y="18" width="44" height="44" rx="4"
+    fill="none" stroke="#60a5fa" stroke-width="0.6" opacity="0.35"
+    transform="rotate(45 50 40)"
+    clip-path="url(#bound)"/>
+
+  <!-- cyan J -->
+  <text x="50" y="72" font-family="Arial, sans-serif" font-size="58" font-weight="700"
+    fill="#00e5ff" text-anchor="middle" clip-path="url(#bound)">J</text>
+
+  <!-- orange accent line -->
+  <line x1="10" y1="90" x2="90" y2="90" stroke="#ff6a00" stroke-width="1" opacity="0.45" clip-path="url(#bound)"/>
+  <circle cx="8" cy="90" r="1.5" fill="#ff9500" opacity="0.7"/>
+  <circle cx="92" cy="90" r="1.5" fill="#ff9500" opacity="0.7"/>
+</svg>
