@@ -20,8 +20,10 @@ app.use(helmet({
 }));
 
 // Middleware Setup
+// .trim() guards against trailing newlines/whitespace that platform env-var UIs
+// can silently introduce via copy-paste -- Node throws on control characters in header values.
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: process.env.CLIENT_URL?.trim() || 'http://localhost:5173',
   credentials: true
 }));
 
