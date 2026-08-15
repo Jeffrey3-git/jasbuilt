@@ -20,10 +20,14 @@ app.use(helmet({
 }));
 
 // Middleware Setup
-// .trim() guards against trailing newlines/whitespace that platform env-var UIs
-// can silently introduce via copy-paste -- Node throws on control characters in header values.
+// Strip any control character anywhere in the value, not just leading/trailing --
+// platform env-var UIs can embed these on paste, and Node throws when a header
+// value contains one. Logged as JSON so hidden characters are visible in deploy logs.
+const corsOrigin = (process.env.CLIENT_URL || 'http://localhost:5173').replace(/[\x00-\x1F\x7F]+/g, '').trim();
+console.log('CORS origin resolved to:', JSON.stringify(corsOrigin));
+
 app.use(cors({
-  origin: process.env.CLIENT_URL?.trim() || 'http://localhost:5173',
+  origin: corsOrigin,
   credentials: true
 }));
 
