@@ -48,6 +48,16 @@
       font-size: 0.9rem;
     }
 
+    .success-banner {
+      background: rgba($color-accent-green, 0.1);
+      border: 1px solid $color-accent-green;
+      color: $color-accent-green;
+      padding: 0.75rem 1rem;
+      border-radius: $radius-sm;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
     .form-group {
       display: flex;
       flex-direction: column;

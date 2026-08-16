@@ -1,48 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquareText } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft, MessageSquareText, Link as LinkIcon, Check } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth';
 
-export function ProjectModal({ projectId, onClose }) {
+export const ProjectDetail = () => {
+  const { id } = useParams();
   const { token } = useAuth();
   const [project, setProject] = useState(null);
   const [commentText, setCommentText] = useState('');
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
 
-  // Close modal when pressing Escape key
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
-
-  // Fetch single project profile data on mount
   useEffect(() => {
     async function fetchProjectDetails() {
+      setLoading(true);
       try {
         const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-        const res = await fetch(`${baseUrl}/api/projects/${projectId}`);
+        const res = await fetch(`${baseUrl}/api/projects/${id}`);
         if (!res.ok) throw new Error('Failed to load project details.');
         const data = await res.json();
         setProject(data);
       } catch (err) {
         console.error(err);
+        setProject(null);
       } finally {
         setLoading(false);
       }
     }
     fetchProjectDetails();
-  }, [projectId]);
+  }, [id]);
 
-  // Handle live feedback submissions
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     if (!commentText.trim()) return;
 
     try {
       const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const res = await fetch(`${baseUrl}/api/projects/${projectId}/comments`, {
+      const res = await fetch(`${baseUrl}/api/projects/${id}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,28 +58,50 @@ export function ProjectModal({ projectId, onClose }) {
     }
   };
 
+  const handleCopyLink = async () => {
+    await navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   if (loading) {
     return (
-      <div className="modal-overlay intense-blur">
+      <div className="project-detail-container">
         <span className="loader">Analyzing Build...</span>
       </div>
     );
   }
-  
-  if (!project) return null;
+
+  if (!project) {
+    return (
+      <div className="project-detail-container">
+        <p className="not-found">Project not found.</p>
+        <Link to="/" className="btn-text-link">Back to feed</Link>
+      </div>
+    );
+  }
 
   return (
-    <div className="modal-overlay intense-blur" onClick={onClose}>
-      <div className="modal-card-content" onClick={e => e.stopPropagation()}>
-        <button className="close-btn" onClick={onClose} aria-label="Close modal">&times;</button>
-        
-        <header className="modal-header">
-          <h2>{project.title}</h2>
-          <p className="author-tag">Built by @{project.author?.username} ({project.author?.school})</p>
+    <div className="project-detail-container">
+      <div className="detail-card">
+        <Link to="/" className="back-link">
+          <ArrowLeft size={16} strokeWidth={2.25} />
+          Back to feed
+        </Link>
+
+        <header className="detail-header">
+          <h1>{project.title}</h1>
+          <div className="detail-header-meta">
+            <p className="author-tag">Built by @{project.author?.username} ({project.author?.school})</p>
+            <button className="btn-copy-link" onClick={handleCopyLink}>
+              {copied ? <Check size={14} strokeWidth={2.25} /> : <LinkIcon size={14} strokeWidth={2.25} />}
+              {copied ? 'Copied!' : 'Copy link'}
+            </button>
+          </div>
         </header>
 
-        <div className="modal-body">
-          <img src={project.imageUrl} alt={project.title} className="modal-hero-img" />
+        <div className="detail-body">
+          <img src={project.imageUrl} alt={project.title} className="detail-hero-img" />
           <p className="description-text">{project.description}</p>
         </div>
 
@@ -104,9 +120,9 @@ export function ProjectModal({ projectId, onClose }) {
 
           {token ? (
             <form onSubmit={handleCommentSubmit} className="comment-form">
-              <input 
-                type="text" 
-                placeholder="Leave feedback on this student build..." 
+              <input
+                type="text"
+                placeholder="Leave feedback on this student build..."
                 value={commentText}
                 onChange={e => setCommentText(e.target.value)}
               />
@@ -128,4 +144,4 @@ export function ProjectModal({ projectId, onClose }) {
       </div>
     </div>
   );
-}
+};

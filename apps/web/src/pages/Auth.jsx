@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { GH_SCHOOLS } from '../../../../packages/shared/src/index'; // Import shared source of truth
+import { GH_SCHOOLS } from '@shared/index';
 
 export const Auth = ({ isRegisterMode = false }) => {
   const navigate = useNavigate();

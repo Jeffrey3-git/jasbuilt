@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { UpvoteButton } from '../components/ui/UpvoteButton';
 
 export function Profile() {
   const { username } = useParams();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -47,8 +48,12 @@ export function Profile() {
         <h3>Shipped Ecosystem Portfolio</h3>
         <div className="project-grid">
           {profile.projects?.map(project => (
-            <article key={project.id} className="project-card">
-              
+            <article
+              key={project.id}
+              className="project-card"
+              onClick={() => navigate(`/projects/${project.id}`)}
+              style={{ cursor: 'pointer' }}
+            >
               <img
                 src={project.imageUrl}
                 alt={project.title}
@@ -63,9 +68,9 @@ export function Profile() {
                 <h4>{project.title}</h4>
                 <p>{project.description}</p>
                 
-                <div className="card-footer">
-                  <UpvoteButton 
-                    projectId={project.id} 
+                <div className="card-footer" onClick={(e) => e.stopPropagation()}>
+                  <UpvoteButton
+                    projectId={project.id}
                     initialCount={project._count.upvotes}
                   />
                 </div>

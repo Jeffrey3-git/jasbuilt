@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Rocket } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import { TECH_TAGS } from '../../../../packages/shared/src/index';
+import { TECH_TAGS } from '@shared/index';
 
 export const Submit = () => {
   const navigate = useNavigate();
@@ -19,6 +19,7 @@ export const Submit = () => {
   const [imageFile, setImageFile] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -66,11 +67,10 @@ export const Submit = () => {
 
       if (!response.ok) throw new Error(data.message || 'Failed to submit project.');
 
-      alert('Build shipped successfully!');
-      navigate('/');
+      setSuccess(true);
+      setTimeout(() => navigate('/'), 1500);
     } catch (err) {
       setError(err.message);
-    } finally {
       setSubmitting(false);
     }
   };
@@ -90,6 +90,7 @@ export const Submit = () => {
           </div>
         )}
 
+        {success && <div className="success-banner">Build shipped successfully! Taking you to the feed…</div>}
         {error && <div className="error-banner">{error}</div>}
 
         <div className="form-group">

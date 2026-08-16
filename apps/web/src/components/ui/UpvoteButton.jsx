@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
-import { formatUpvoteCount } from '../../../../../packages/shared/src/index';
+import { formatUpvoteCount } from '@shared/index';
 
 export const UpvoteButton = ({ projectId, initialCount, initialHasUpvoted }) => {
   const { token, isAuthenticated } = useAuth();

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Sparkles, ArrowUp, MessageCircle } from 'lucide-react';
 
 export function Leaderboard() {
+  const navigate = useNavigate();
   const [rankedBuilds, setRankedBuilds] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -44,16 +45,21 @@ export function Leaderboard() {
           rankedBuilds.map((project, index) => {
             const rank = index + 1;
             return (
-              <div key={project.id} className={`leaderboard-row rank-${rank}`}>
+              <div
+                key={project.id}
+                className={`leaderboard-row rank-${rank}`}
+                onClick={() => navigate(`/projects/${project.id}`)}
+                style={{ cursor: 'pointer' }}
+              >
                 <div className="rank-badge-col">
                   <span className="rank-number">#{rank}</span>
                 </div>
-                
+
                 <img src={project.imageUrl} alt="" className="row-thumb" />
 
                 <div className="project-details-col">
                   <h3>{project.title}</h3>
-                  <p>by <Link to={`/profile/${project.author?.username}`}>@{project.author?.username}</Link> — <span className="school-text">{project.author?.school}</span></p>
+                  <p>by <Link to={`/profile/${project.author?.username}`} onClick={(e) => e.stopPropagation()}>@{project.author?.username}</Link> — <span className="school-text">{project.author?.school}</span></p>
                 </div>
 
                 <div className="metrics-col">

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { formatUpvoteCount, GH_SCHOOLS, TECH_TAGS } from '../../../packages/shared/src/index';
+import { formatUpvoteCount, GH_SCHOOLS, TECH_TAGS } from '@shared/index';
 
 describe('formatUpvoteCount', () => {
   it('returns small counts as plain numbers', () => {

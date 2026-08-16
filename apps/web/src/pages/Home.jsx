@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Rocket, MessageCircle, SearchX, Sparkles, MessageSquareText } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import { GH_SCHOOLS, TECH_TAGS } from '../../../../packages/shared/src/index';
-import { ProjectModal } from '../components/ui/ProjectModal';
+import { GH_SCHOOLS, TECH_TAGS } from '@shared/index';
 import { UpvoteButton } from '../components/ui/UpvoteButton';
 
 export const Home = () => {
   const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedProjectId, setSelectedProjectId] = useState(null);
 
   // Filtering States
   const [searchQuery, setSearchQuery] = useState('');
@@ -169,7 +168,7 @@ export const Home = () => {
             <article
               key={project.id}
               className="project-card"
-              onClick={() => setSelectedProjectId(project.id)}
+              onClick={() => navigate(`/projects/${project.id}`)}
               style={{ cursor: 'pointer' }}
             >
               <div className="card-image-wrapper">
@@ -241,13 +240,6 @@ export const Home = () => {
             </article>
           ))}
         </main>
-      )}
-
-      {selectedProjectId && (
-        <ProjectModal
-          projectId={selectedProjectId}
-          onClose={() => setSelectedProjectId(null)}
-        />
       )}
     </div>
   );
