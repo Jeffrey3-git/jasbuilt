@@ -1,107 +1,115 @@
-# 🚀 jasBuilt
+# JASBuilt
 
----
+A portfolio showcase platform for Ghanaian student developers — discover, upvote, and give feedback on software built across local university campuses. Built around one core idea: students who ship projects often can't find reviewers, so JASBuilt lets a builder flag "I want feedback on this" and say exactly what to look at.
 
-<div align="center">
-  <!-- Dynamic Status Badges -->
-  <img src="https://img.shields.io/badge/Platform-React_v19-61dafb?style=for-the-badge&logo=react&logoColor=black" alt="React View" />
-  <img src="https://img.shields.io/badge/Backend-Express_Node-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Express Server" />
-  <img src="https://img.shields.io/badge/Database-PostgreSQL-4169e1?style=for-the-badge&logo=postgresql&logoColor=white" alt="Database" />
-  <img src="https://img.shields.io/badge/Storage-Cloudinary-F5C842?style=for-the-badge&logo=cloudinary&logoColor=black" alt="Cloudinary Storage" />
-  <img src="https://img.shields.io/badge/Workspace-PNPM_Monorepo-F68712?style=for-the-badge&logo=pnpm&logoColor=white" alt="PNPM Monorepo" />
-</div>
+**Live:** [jasbuilt.vercel.app](https://jasbuilt.vercel.app)
 
-<br />
+<p>
+  <img alt="React" src="https://img.shields.io/badge/React-18.3-61dafb?logo=react&logoColor=black" />
+  <img alt="Express" src="https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white" />
+  <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-Prisma_5-4169e1?logo=postgresql&logoColor=white" />
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-6-646cff?logo=vite&logoColor=white" />
+  <img alt="pnpm" src="https://img.shields.io/badge/pnpm_workspaces-monorepo-f69220?logo=pnpm&logoColor=white" />
+  <img alt="Vitest" src="https://img.shields.io/badge/tested_with-Vitest-6e9f18?logo=vitest&logoColor=white" />
+</p>
 
-<div align="center">
-  <h3>⚡ The Product Hunt for Ghanaian Student Developers ⚡</h3>
-  <p>Discover, explore, upvote, and discuss software applications built entirely across local university campuses.</p>
-  <a href="#-getting-started">Explore the Docs</a> •
-  <a href="#-key-features">View Features</a>
-</div>
+## Screenshots
 
----
+| Feed | Leaderboard |
+|---|---|
+| ![Feed](docs/screenshots/feed.png) | ![Leaderboard](docs/screenshots/leaderboard.png) |
 
-## 📸 Interface Preview
+| Project detail |
+|---|
+| ![Project detail](docs/screenshots/project-detail.png) |
 
-<div align="center">
-  <img width="1341" height="618" alt="Feed" src="https://github.com/user-attachments/assets/c50e6b17-8d19-4ed5-a53b-f27fad0730c1" />
-  <img width="1341" height="622" alt="Leaderboard Page" src="https://github.com/user-attachments/assets/a211ec50-b5d1-4311-811e-f7982443a28b" />
-  <img width="1346" height="613" alt="User Page" src="https://github.com/user-attachments/assets/1cd6ad5a-d627-4a79-8655-1cf62348c7c9" />
-</div>
+## Features
 
----
+- **Feedback-request flow** — authors can flag a project as seeking feedback and describe specifically what they want reviewed; a dedicated feed filter surfaces those projects, and the ask is shown prominently on the project's page.
+- **Discovery feed** — filter by institution, tech stack, or "seeking feedback," with instant client-side search.
+- **Optimistic upvotes** — counts update immediately in the UI while the request confirms in the background, with rollback on failure.
+- **Comment threads** — feedback discussion attached to each project.
+- **Leaderboard** — projects ranked by upvotes, with podium styling for the top 3.
+- **Shareable project pages** — every project has its own `/projects/:id` route with a copy-link button, instead of being locked behind a modal.
+- **Responsive navigation** — collapses into a mobile menu below 768px.
+- **JWT authentication** — registration and login with bcrypt-hashed passwords.
 
-## ✨ Key Features
+## Tech stack
 
-* **📦 Monorepo Architecture:** Driven by `pnpm workspaces` separating shared logic packages completely from isolated UI and server deployment bundles.
-* **🔍 Instant Discovery Engine:** In-memory client-side filters allowing users to search by text, filter by institution, or sort dynamically by technology stack with zero latency.
-* **🔺 Optimistic UI Upvote Loop:** Real-time feedback upvote counters that instantly increment visually while executing atomic background transactions against the database.
-* **💬 Rich Feedback Stream:** High-velocity comment overlays attached directly to individual build profiles mapping custom schemas flawlessly.
-* **🥇 Dynamic Leaderboard:** Real-time standing tables grouping database aggregates by upvote counts using custom Prisma validation tracking.
-* **🛡️ Hardened API Security:** Shielded against core entry vectors via robust input sanitization, strict body parser constraints (`10kb`), and XSS middleware bindings.
+| Layer | Stack |
+|---|---|
+| `apps/web` | React 18, Vite, React Router 6, SCSS, [lucide-react](https://lucide.dev) icons |
+| `apps/api` | Node.js, Express 5, Prisma ORM, PostgreSQL, JWT auth, Cloudinary (image uploads) |
+| `packages/shared` | Cross-workspace constants shared between web and api (`GH_SCHOOLS`, `TECH_TAGS`, formatters) |
+| Testing | Vitest + Supertest (API, against an isolated test database) · Vitest + React Testing Library (web) |
 
----
+## Deployment
 
-## 🏗️ Architecture Blueprint
+| Service | Host | Notes |
+|---|---|---|
+| Frontend | [Vercel](https://vercel.com) | Auto-deploys on push to `main` |
+| API | [Render](https://render.com) | Auto-deploys on push to `main`; free tier spins down after 15 min idle (first request after that takes ~30-50s) |
+| Database | [Neon](https://neon.tech) | Serverless Postgres; migrations run automatically as part of the Render build step via `prisma migrate deploy` |
 
-The project follows a strictly typed, unified monorepo system pattern:
-
-| Directory Path | Focus Layer | Core Dependency Stack |
-| :--- | :--- | :--- |
-| **`apps/web`** | Frontend / View Shell | React 19, Vite, SCSS Layouts, React Router v7 |
-| **`apps/api`** | Backend Server Engine | Node.js, Express, Prisma ORM, Helmet, Multer |
-| **`packages/shared`** | Shared Utilities | Cross-workspace validation arrays (`GH_SCHOOLS`, `TECH_TAGS`) |
-
----
-
-## 🚦 Getting Started
+## Getting started
 
 ### Prerequisites
-Make sure you have [Node.js](https://nodejs.org) and [PNPM](https://pnpm.io) globally operational on your computer.
+[Node.js](https://nodejs.org) ≥18, [pnpm](https://pnpm.io) ≥8, and a local PostgreSQL instance.
 
-### 1. Setup Local Repositories
-Clone the project space and enter the directory layout root:
+### 1. Clone and install
 ```bash
-git clone https://github.com
+git clone https://github.com/Jeffrey3-git/jasbuilt.git
 cd jasbuilt
-```
-
-### 2. Install Workspace Monorepo Dependencies
-Run the global structural bootstrap command via pnpm:
-```bash
 pnpm install
 ```
 
-### 3. Configure Your Environment Keys
-Create an `.env` file inside `apps/api/`:
+### 2. Configure environment variables
+Copy `.env.example` into `apps/api/.env` and `apps/web/.env`, then fill in real values:
+
 ```env
+# apps/api/.env
+PORT=5000
 DATABASE_URL="postgresql://username:password@localhost:5432/jasbuilt_db?schema=public"
-JWT_SECRET="your_ultra_secure_dev_jwt_secret_key"
-CLOUDINARY_CLOUD_NAME="your_cloudinary_cloud_name"
-CLOUDINARY_API_KEY="your_api_key"
-CLOUDINARY_API_SECRET="your_api_secret"
+JWT_SECRET="a-long-random-string"
+CLIENT_URL="http://localhost:5173"          # used for CORS
+CLOUDINARY_CLOUD_NAME="..."
+CLOUDINARY_API_KEY="..."
+CLOUDINARY_API_SECRET="..."
 ```
 
-Create an `.env` file inside `apps/web/`:
 ```env
+# apps/web/.env
 VITE_API_URL="http://localhost:5000"
 ```
 
-### 4. Seed and Sync Your Database Schema
-Push your database mapping rules up to your local PostgreSQL instance:
+### 3. Set up the database
 ```bash
-pnpm --filter api prisma db push
+pnpm --filter @jasbuilt/api exec prisma migrate dev
 ```
 
-### 5. Fire Up the Development Workspace
-Boot the entire engine (both frontend dashboard and server endpoints simultaneously):
+### 4. Run it
 ```bash
 pnpm dev
 ```
-Your frontend layer will immediately launch at 🌐 http://localhost:5173!
+Frontend at [http://localhost:5173](http://localhost:5173), API at `http://localhost:5000`.
 
----
+## Testing
 
-## 📄 License
-Distributed under the MIT License. See LICENSE for details.
+```bash
+pnpm --filter @jasbuilt/api test    # API tests, run against a dedicated jasbuiltdb_test database
+pnpm --filter @jasbuilt/web test    # Component/unit tests
+```
+
+## Project structure
+
+```
+apps/
+  api/       Express + Prisma backend
+  web/       React + Vite frontend
+packages/
+  shared/    Constants shared across both apps
+```
+
+## Author
+
+Built by **Jeff Akubea Selasi (JAS)** — [GitHub](https://github.com/Jeffrey3-git) · [LinkedIn](https://www.linkedin.com/in/jeff-akubea-51257a405/)
