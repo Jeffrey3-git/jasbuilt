@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { GH_SCHOOLS } from '@shared/index';
+import { AUTHOR } from '../config/author';
 
 export const Auth = ({ isRegisterMode = false }) => {
   const navigate = useNavigate();
@@ -137,6 +138,14 @@ export const Auth = ({ isRegisterMode = false }) => {
             {isRegister ? 'Already have an account? Log In' : "Don't have an account? Sign Up"}
           </button>
         </div>
+      </div>
+
+      <div className="auth-credit">
+        Built by {AUTHOR.name}
+        <span className="auth-credit-links">
+          <a href={AUTHOR.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href={AUTHOR.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </span>
       </div>
     </div>
   );

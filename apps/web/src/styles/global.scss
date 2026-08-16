@@ -1,5 +1,6 @@
 @import 'tokens';
 @import 'navbar';
+@import 'footer';
 @import 'auth';
 @import 'submit';
 @import 'home';
@@ -17,6 +18,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-content {
+  flex: 1;
 }
 
 a {

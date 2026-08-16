@@ -1,0 +1,36 @@
+@import 'tokens';
+
+.site-footer {
+  border-top: 1px solid $color-border-dark;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  color: $color-text-dim;
+  font-size: 0.8rem;
+
+  .footer-tagline {
+    font-family: $font-mono;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.25rem;
+
+    a {
+      color: $color-text-muted;
+      font-weight: 600;
+      transition: $transition-smooth;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+  }
+
+  .footer-copyright {
+    color: $color-text-dim;
+  }
+}

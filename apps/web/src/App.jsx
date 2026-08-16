@@ -9,6 +9,7 @@ import { Submit } from './pages/Submit';
 import { Profile } from './pages/Profile';
 import { Leaderboard } from './pages/Leaderboard';
 import { ProjectDetail } from './pages/ProjectDetail';
+import { Footer } from './components/layout/Footer';
 
 const GlobalNavigationBar = () => {
   const { isAuthenticated, user, logoutSession } = useAuth();
@@ -74,43 +75,48 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        {/* Universal Top Layout Menu Anchor */}
-        <GlobalNavigationBar />
+        <div className="app-shell">
+          <GlobalNavigationBar />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
+          <div className="app-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
 
-          <Route path="/auth" element={<Auth />} />
+              <Route path="/auth" element={<Auth />} />
 
-          <Route
-            path="/submit"
-            element={
-              <ProtectedRoute>
-                <Submit />
-              </ProtectedRoute>
-            }
-          />
+              <Route
+                path="/submit"
+                element={
+                  <ProtectedRoute>
+                    <Submit />
+                  </ProtectedRoute>
+                }
+              />
 
-          <Route
-            path="/profile/:username"
-            element={<Profile />}
-          />
+              <Route
+                path="/profile/:username"
+                element={<Profile />}
+              />
 
-          <Route
-            path="/leaderboard"
-            element={<Leaderboard />}
-          />
+              <Route
+                path="/leaderboard"
+                element={<Leaderboard />}
+              />
 
-          <Route
-            path="/projects/:id"
-            element={<ProjectDetail />}
-          />
+              <Route
+                path="/projects/:id"
+                element={<ProjectDetail />}
+              />
 
-          <Route
-            path="*"
-            element={<Navigate to="/" replace />}
-          />
-        </Routes>
+              <Route
+                path="*"
+                element={<Navigate to="/" replace />}
+              />
+            </Routes>
+          </div>
+
+          <Footer />
+        </div>
       </BrowserRouter>
     </AuthProvider>
   );
